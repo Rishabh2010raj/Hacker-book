@@ -2,7 +2,6 @@
 const DB_USERS = 'hb_users';
 const DB_POSTS = 'hb_posts';
 const DB_MESSAGES = 'hb_messages';
-const DB_FOLLOWS = 'hb_follows'; // { "userA": ["userB", "userC"] }
 const DB_SESSION = 'hb_session';
 
 let currentUser = localStorage.getItem(DB_SESSION) || '';
@@ -83,82 +82,26 @@ function previewMediaName() {
 // ----------------- TABS & NAVIGATION -----------------
 function switchTab(tab) {
     const feedView = document.getElementById('feedView');
-    const usersView = document.getElementById('usersView');
     const chatView = document.getElementById('chatView');
-
     const navFeed = document.getElementById('navFeed');
-    const navUsers = document.getElementById('navUsers');
     const navChat = document.getElementById('navChat');
-
-    feedView.classList.add('hidden');
-    usersView.classList.add('hidden');
-    chatView.classList.add('hidden');
-
-    navFeed.classList.remove('active-nav');
-    navUsers.classList.remove('active-nav');
-    navChat.classList.remove('active-nav');
 
     if (tab === 'feed') {
         feedView.classList.remove('hidden');
+        chatView.classList.add('hidden');
         navFeed.classList.add('active-nav');
+        navChat.classList.remove('active-nav');
         renderPosts();
-    } else if (tab === 'users') {
-        usersView.classList.remove('hidden');
-        navUsers.classList.add('active-nav');
-        renderAllUsers();
     } else {
+        feedView.classList.add('hidden');
         chatView.classList.remove('hidden');
         navChat.classList.add('active-nav');
-        renderFriendsList();
+        navFeed.classList.remove('active-nav');
+        renderUsersList();
     }
 }
 
-// ----------------- FOLLOW / UNFOLLOW LOGIC -----------------
-function toggleFollow(targetUser) {
-    let follows = JSON.parse(localStorage.getItem(DB_FOLLOWS)) || {};
-    if (!follows[currentUser]) follows[currentUser] = [];
-
-    const index = follows[currentUser].indexOf(targetUser);
-    if (index === -1) {
-        follows[currentUser].push(targetUser);
-    } else {
-        follows[currentUser].splice(index, 1);
-    }
-
-    localStorage.setItem(DB_FOLLOWS, JSON.stringify(follows));
-    renderAllUsers();
-}
-
-function renderAllUsers() {
-    const users = JSON.parse(localStorage.getItem(DB_USERS)) || {};
-    const follows = JSON.parse(localStorage.getItem(DB_FOLLOWS)) || {};
-    const myFollowing = follows[currentUser] || [];
-
-    const container = document.getElementById('allUsersContainer');
-    container.innerHTML = '';
-
-    const otherUsers = Object.keys(users).filter(u => u !== currentUser);
-
-    if (otherUsers.length === 0) {
-        container.innerHTML = `<p style="color:#65676b;">No other users on the app yet.</p>`;
-        return;
-    }
-
-    otherUsers.forEach(u => {
-        const isFollowing = myFollowing.includes(u);
-        const div = document.createElement('div');
-        div.className = 'user-list-item';
-        div.innerHTML = `
-            <span><b>👤 @${u}</b></span>
-            <button onclick="toggleFollow('${u}')" class="btn-follow ${isFollowing ? 'following' : ''}">
-                ${isFollowing ? '✔ Following' : '+ Follow'}
-            </button>
-        `;
-        container.appendChild(div);
-    });
-}
-
-// ----------------- POSTS SYSTEM -----------------
+// ----------------- POSTS & MEDIA SYSTEM -----------------
 function createPost() {
     const text = document.getElementById('postInput').value.trim();
     const fileInput = document.getElementById('mediaInput');
@@ -193,9 +136,12 @@ function savePostToStorage(text, mediaData, mediaType) {
     });
 
     localStorage.setItem(DB_POSTS, JSON.stringify(posts));
+    
+    // Reset inputs
     document.getElementById('postInput').value = '';
     document.getElementById('mediaInput').value = '';
     document.getElementById('fileNameDisplay').innerText = '';
+    
     renderPosts();
 }
 
@@ -282,32 +228,20 @@ function renderPosts() {
     });
 }
 
-// ----------------- CHAT SYSTEM (FOLLOWERS / FRIENDS ONLY) -----------------
-function renderFriendsList() {
-    const follows = JSON.parse(localStorage.getItem(DB_FOLLOWS)) || {};
-    const container = document.getElementById('friendsContainer');
+// ----------------- CHAT / MESSENGER SYSTEM -----------------
+function renderUsersList() {
+    const users = JSON.parse(localStorage.getItem(DB_USERS)) || {};
+    const container = document.getElementById('usersContainer');
     container.innerHTML = '';
 
-    // Logged in user system
-    const myFollowing = follows[currentUser] || [];
-    
-    // Check who follows currentUser
-    const myFollowers = [];
-    Object.keys(follows).forEach(user => {
-        if (follows[user].includes(currentUser)) {
-            myFollowers.push(user);
-        }
-    });
+    const otherUsers = Object.keys(users).filter(u => u !== currentUser);
 
-    // Combine following and followers (Unique List)
-    const allowedChatUsers = [...new Set([...myFollowing, ...myFollowers])];
-
-    if (allowedChatUsers.length === 0) {
-        container.innerHTML = `<p style="color:#65676b; text-align:center;">आप केवल उन्हीं से बात कर सकते हैं जो आपको Follow करते हैं या जिन्हें आप Follow करते हैं।<br><br><b>'👥 Friends'</b> टैब में जाकर किसी को Follow करें!</p>`;
+    if (otherUsers.length === 0) {
+        container.innerHTML = `<p style="color:#65676b;">No other users signed up yet.</p>`;
         return;
     }
 
-    allowedChatUsers.forEach(u => {
+    otherUsers.forEach(u => {
         const div = document.createElement('div');
         div.className = 'user-list-item';
         div.innerHTML = `
