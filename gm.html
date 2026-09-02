@@ -1,0 +1,3114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HackerBook</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f0f2f5;
+    color:#111;
+}
+
+button,
+input,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* AUTH */
+
+#auth{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:linear-gradient(135deg,#1877f2,#673ab7);
+}
+
+.auth-box{
+    width:100%;
+    max-width:400px;
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 10px 30px #0004;
+}
+
+.logo{
+    text-align:center;
+    color:#1877f2;
+    font-size:35px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#777;
+    margin-bottom:25px;
+}
+
+.auth-box h2{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.input{
+    width:100%;
+    padding:13px;
+    margin:6px 0;
+    border:1px solid #ddd;
+    border-radius:9px;
+    outline:none;
+}
+
+.input:focus{
+    border-color:#1877f2;
+}
+
+.btn{
+    width:100%;
+    padding:13px;
+    margin-top:10px;
+    border:0;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.blue{
+    background:#1877f2;
+    color:white;
+}
+
+.gray{
+    background:#e4e6eb;
+    color:#111;
+}
+
+.red{
+    background:#e53935;
+    color:white;
+}
+
+.green{
+    background:#2e7d32;
+    color:white;
+}
+
+.msg{
+    text-align:center;
+    min-height:22px;
+    margin-top:10px;
+    font-size:14px;
+}
+
+/* APP */
+
+#app{
+    min-height:100vh;
+}
+
+.header{
+    height:60px;
+    background:white;
+    border-bottom:1px solid #ddd;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 15px;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.brand{
+    color:#1877f2;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.main{
+    max-width:850px;
+    margin:auto;
+    padding:15px 15px 80px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.card{
+    background:white;
+    border-radius:13px;
+    padding:16px;
+    margin-bottom:15px;
+    box-shadow:0 1px 3px #0002;
+}
+
+.card h2{
+    margin-bottom:15px;
+}
+
+textarea{
+    width:100%;
+    min-height:100px;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    resize:none;
+}
+
+.post{
+    padding:15px 0;
+    border-bottom:1px solid #eee;
+}
+
+.post:last-child{
+    border-bottom:0;
+}
+
+.post-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#1877f2;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.username{
+    font-weight:bold;
+}
+
+.time{
+    color:#777;
+    font-size:12px;
+}
+
+.post-text{
+    line-height:1.5;
+    white-space:pre-wrap;
+}
+
+.post-buttons{
+    display:flex;
+    gap:8px;
+    margin-top:12px;
+}
+
+.small{
+    padding:9px 13px;
+    border:0;
+    border-radius:8px;
+    background:#e4e6eb;
+    font-weight:bold;
+}
+
+.person{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+}
+
+.person-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.person-buttons{
+    display:flex;
+    gap:5px;
+}
+
+.empty{
+    text-align:center;
+    color:#777;
+    padding:30px 10px;
+}
+
+/* CHAT */
+
+.chat-users{
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    padding-bottom:10px;
+}
+
+.chat-user{
+    padding:9px 12px;
+    border:0;
+    border-radius:8px;
+    background:#e4e6eb;
+    white-space:nowrap;
+}
+
+.chat-user.active{
+    background:#1877f2;
+    color:white;
+}
+
+.messages{
+    min-height:300px;
+    padding:15px 0;
+}
+
+.message{
+    max-width:75%;
+    padding:10px;
+    margin:7px 0;
+    border-radius:12px;
+}
+
+.message.me{
+    margin-left:auto;
+    background:#1877f2;
+    color:white;
+}
+
+.message.other{
+    background:#e4e6eb;
+}
+
+.chat-row{
+    display:flex;
+    gap:7px;
+}
+
+.chat-row input{
+    flex:1;
+    padding:11px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+/* PROFILE */
+
+.profile{
+    text-align:center;
+}
+
+.profile-avatar{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    margin:auto;
+    background:#1877f2;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+    font-weight:bold;
+}
+
+.stats{
+    display:flex;
+    justify-content:space-around;
+    margin-top:20px;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat b{
+    display:block;
+    font-size:20px;
+}
+
+.stat span{
+    color:#777;
+    font-size:12px;
+}
+
+/* NAV */
+
+.nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:62px;
+    background:white;
+    border-top:1px solid #ddd;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    z-index:20;
+    overflow-x:auto;
+}
+
+.nav button{
+    min-width:65px;
+    border:0;
+    background:none;
+    color:#666;
+    font-size:11px;
+}
+
+.nav button b{
+    display:block;
+    font-size:20px;
+}
+
+.nav button.active{
+    color:#1877f2;
+}
+
+/* ADMIN */
+
+.admin-item{
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+@media(max-width:600px){
+
+    .main{
+        padding:10px 10px 75px;
+    }
+
+    .person{
+        align-items:flex-start;
+    }
+
+    .person-buttons{
+        flex-direction:column;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= AUTH ================= -->
+
+<div id="auth">
+
+    <div class="auth-box">
+
+        <div class="logo">HackerBook</div>
+
+        <div class="subtitle">
+            Connect • Create • Share
+        </div>
+
+        <!-- LOGIN -->
+
+        <div id="loginBox">
+
+            <h2>Login</h2>
+
+            <input
+                id="loginEmail"
+                class="input"
+                type="email"
+                placeholder="Email"
+            >
+
+            <input
+                id="loginPassword"
+                class="input"
+                type="password"
+                placeholder="Password"
+            >
+
+            <button
+                id="loginBtn"
+                type="button"
+                class="btn blue"
+            >
+                Login
+            </button>
+
+            <button
+                id="signupPageBtn"
+                type="button"
+                class="btn gray"
+            >
+                Create New Account
+            </button>
+
+            <div id="loginMsg" class="msg"></div>
+
+        </div>
+
+
+        <!-- SIGNUP -->
+
+        <div id="signupBox" class="hidden">
+
+            <h2>Create Account</h2>
+
+            <input
+                id="signupUsername"
+                class="input"
+                type="text"
+                placeholder="Username"
+            >
+
+            <input
+                id="signupEmail"
+                class="input"
+                type="email"
+                placeholder="Email"
+            >
+
+            <input
+                id="signupPassword"
+                class="input"
+                type="password"
+                placeholder="Password"
+            >
+
+            <input
+                id="signupConfirm"
+                class="input"
+                type="password"
+                placeholder="Confirm Password"
+            >
+
+            <button
+                id="signupBtn"
+                type="button"
+                class="btn blue"
+            >
+                Create Account
+            </button>
+
+            <button
+                id="loginPageBtn"
+                type="button"
+                class="btn gray"
+            >
+                Back to Login
+            </button>
+
+            <div id="signupMsg" class="msg"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= APP ================= -->
+
+<div id="app" class="hidden">
+
+    <header class="header">
+
+        <div class="brand">
+            HackerBook
+        </div>
+
+        <div id="headerUser"></div>
+
+    </header>
+
+
+    <main class="main">
+
+        <!-- HOME -->
+
+        <section id="home" class="page active">
+
+            <div class="card">
+
+                <h2>Home Feed</h2>
+
+                <div id="feed"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REELS -->
+
+        <section id="reels" class="page">
+
+            <div class="card">
+
+                <h2>Reels</h2>
+
+                <div id="reelsBox"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CREATE -->
+
+        <section id="create" class="page">
+
+            <div class="card">
+
+                <h2>Create Post</h2>
+
+                <textarea
+                    id="postInput"
+                    placeholder="What's on your mind?"
+                ></textarea>
+
+                <button
+                    id="postBtn"
+                    type="button"
+                    class="btn blue"
+                >
+                    Publish Post
+                </button>
+
+                <div id="postMsg" class="msg"></div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>Create Reel</h2>
+
+                <input
+                    id="reelCaption"
+                    class="input"
+                    placeholder="Reel caption"
+                >
+
+                <input
+                    id="reelFile"
+                    class="input"
+                    type="file"
+                    accept="video/*"
+                >
+
+                <button
+                    id="reelBtn"
+                    type="button"
+                    class="btn blue"
+                >
+                    Publish Reel
+                </button>
+
+                <div id="reelMsg" class="msg"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FRIENDS -->
+
+        <section id="friends" class="page">
+
+            <div class="card">
+
+                <h2>Friend Requests</h2>
+
+                <div id="requests"></div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>People</h2>
+
+                <div id="people"></div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>My Friends</h2>
+
+                <div id="myFriends"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHAT -->
+
+        <section id="chat" class="page">
+
+            <div class="card">
+
+                <h2>Chat</h2>
+
+                <div id="chatUsers" class="chat-users"></div>
+
+                <div id="messages" class="messages">
+
+                    <div class="empty">
+                        Select a friend.
+                    </div>
+
+                </div>
+
+                <div class="chat-row">
+
+                    <input
+                        id="messageInput"
+                        type="text"
+                        placeholder="Write a message..."
+                    >
+
+                    <button
+                        id="sendBtn"
+                        type="button"
+                        class="small"
+                    >
+                        Send
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <section id="notifications" class="page">
+
+            <div class="card">
+
+                <h2>Notifications</h2>
+
+                <div id="notificationBox"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROFILE -->
+
+        <section id="profile" class="page">
+
+            <div class="card profile">
+
+                <div
+                    id="profileAvatar"
+                    class="profile-avatar"
+                ></div>
+
+                <h2 id="profileName"></h2>
+
+                <p id="profileEmail"></p>
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <b id="profilePosts">0</b>
+                        <span>Posts</span>
+                    </div>
+
+                    <div class="stat">
+                        <b id="profileFriends">0</b>
+                        <span>Friends</span>
+                    </div>
+
+                    <div class="stat">
+                        <b id="profileFollowers">0</b>
+                        <span>Followers</span>
+                    </div>
+
+                    <div class="stat">
+                        <b id="profileFollowing">0</b>
+                        <span>Following</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>My Posts</h2>
+
+                <div id="myPosts"></div>
+
+            </div>
+
+
+            <div class="card">
+
+                <button
+                    id="logoutBtn"
+                    type="button"
+                    class="btn red"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ADMIN -->
+
+        <section id="admin" class="page">
+
+            <div class="card">
+
+                <h2>🛡️ Admin Panel</h2>
+
+                <div id="adminUsers"></div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>Posts Management</h2>
+
+                <div id="adminPosts"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- NAV -->
+
+    <nav class="nav">
+
+        <button
+            type="button"
+            class="active"
+            data-page="home"
+        >
+            <b>🏠</b>
+            Home
+        </button>
+
+        <button
+            type="button"
+            data-page="reels"
+        >
+            <b>🎬</b>
+            Reels
+        </button>
+
+        <button
+            type="button"
+            data-page="create"
+        >
+            <b>➕</b>
+            Create
+        </button>
+
+        <button
+            type="button"
+            data-page="friends"
+        >
+            <b>👥</b>
+            Friends
+        </button>
+
+        <button
+            type="button"
+            data-page="chat"
+        >
+            <b>💬</b>
+            Chat
+        </button>
+
+        <button
+            type="button"
+            data-page="notifications"
+        >
+            <b>🔔</b>
+            Alerts
+        </button>
+
+        <button
+            type="button"
+            data-page="profile"
+        >
+            <b>👤</b>
+            Profile
+        </button>
+
+        <button
+            id="adminNav"
+            type="button"
+            class="hidden"
+            data-page="admin"
+        >
+            <b>🛡️</b>
+            Admin
+        </button>
+
+    </nav>
+
+</div>
+
+
+<script>
+
+/* ============================================
+   HACKERBOOK
+   SIMPLE + STABLE VERSION
+============================================ */
+
+(function(){
+
+"use strict";
+
+
+/* DATABASE KEYS */
+
+const USERS_KEY = "hb_users";
+const POSTS_KEY = "hb_posts";
+const REELS_KEY = "hb_reels";
+const MSG_KEY = "hb_messages";
+const NOTIFY_KEY = "hb_notifications";
+const CURRENT_KEY = "hb_current";
+
+const ADMIN_EMAIL = "r27748775@gmail.com";
+
+
+/* SAFE JSON */
+
+function read(key, fallback){
+
+    try{
+
+        const value =
+            localStorage.getItem(key);
+
+        return value
+            ? JSON.parse(value)
+            : fallback;
+
+    }catch(e){
+
+        console.log(e);
+
+        return fallback;
+    }
+}
+
+
+function write(key,value){
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(value)
+    );
+}
+
+
+/* DATA */
+
+let users = read(USERS_KEY,[]);
+let posts = read(POSTS_KEY,[]);
+let reels = read(REELS_KEY,[]);
+let messages = read(MSG_KEY,[]);
+let notifications = read(NOTIFY_KEY,[]);
+
+let currentId =
+    localStorage.getItem(CURRENT_KEY);
+
+let selectedChat = null;
+
+
+/* HELPERS */
+
+function id(){
+
+    return Date.now().toString(36)
+        + Math.random()
+        .toString(36)
+        .substring(2,8);
+}
+
+
+function me(){
+
+    return users.find(
+        u => u.id === currentId
+    );
+}
+
+
+function user(id){
+
+    return users.find(
+        u => u.id === id
+    );
+}
+
+
+function initial(name){
+
+    return name
+        ? name.charAt(0).toUpperCase()
+        : "?";
+}
+
+
+function safe(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+function save(){
+
+    write(USERS_KEY,users);
+    write(POSTS_KEY,posts);
+    write(REELS_KEY,reels);
+    write(MSG_KEY,messages);
+    write(NOTIFY_KEY,notifications);
+
+}
+
+
+/* =========================================
+   AUTH SCREEN
+========================================= */
+
+const auth =
+    document.getElementById("auth");
+
+const app =
+    document.getElementById("app");
+
+const loginBox =
+    document.getElementById("loginBox");
+
+const signupBox =
+    document.getElementById("signupBox");
+
+
+/* SHOW SIGNUP */
+
+document
+.getElementById("signupPageBtn")
+.addEventListener("click",function(){
+
+    loginBox.classList.add("hidden");
+    signupBox.classList.remove("hidden");
+
+});
+
+
+/* SHOW LOGIN */
+
+document
+.getElementById("loginPageBtn")
+.addEventListener("click",function(){
+
+    signupBox.classList.add("hidden");
+    loginBox.classList.remove("hidden");
+
+});
+
+
+/* =========================================
+   CREATE ACCOUNT
+========================================= */
+
+document
+.getElementById("signupBtn")
+.addEventListener("click",function(){
+
+    const username =
+        document.getElementById(
+            "signupUsername"
+        ).value.trim();
+
+    const email =
+        document.getElementById(
+            "signupEmail"
+        ).value.trim().toLowerCase();
+
+    const password =
+        document.getElementById(
+            "signupPassword"
+        ).value;
+
+    const confirm =
+        document.getElementById(
+            "signupConfirm"
+        ).value;
+
+    const msg =
+        document.getElementById(
+            "signupMsg"
+        );
+
+
+    msg.style.color = "#e53935";
+
+
+    if(
+        username === "" ||
+        email === "" ||
+        password === ""
+    ){
+
+        msg.textContent =
+            "Please fill all fields.";
+
+        return;
+    }
+
+
+    if(password.length < 6){
+
+        msg.textContent =
+            "Password must be at least 6 characters.";
+
+        return;
+    }
+
+
+    if(password !== confirm){
+
+        msg.textContent =
+            "Passwords do not match.";
+
+        return;
+    }
+
+
+    if(
+        users.some(
+            u => u.email === email
+        )
+    ){
+
+        msg.textContent =
+            "Email already registered.";
+
+        return;
+    }
+
+
+    if(
+        users.some(
+            u =>
+            u.username.toLowerCase()
+            === username.toLowerCase()
+        )
+    ){
+
+        msg.textContent =
+            "Username already exists.";
+
+        return;
+    }
+
+
+    const newUser = {
+
+        id:id(),
+
+        username:username,
+
+        email:email,
+
+        password:password,
+
+        friends:[],
+
+        requests:[],
+
+        followers:[],
+
+        following:[],
+
+        blocked:false
+
+    };
+
+
+    users.push(newUser);
+
+    write(
+        USERS_KEY,
+        users
+    );
+
+
+    msg.style.color =
+        "#2e7d32";
+
+    msg.textContent =
+        "Account created!";
+
+
+    document.getElementById(
+        "loginEmail"
+    ).value = email;
+
+
+    document.getElementById(
+        "loginPassword"
+    ).value = password;
+
+
+    setTimeout(function(){
+
+        signupBox.classList.add(
+            "hidden"
+        );
+
+        loginBox.classList.remove(
+            "hidden"
+        );
+
+    },500);
+
+});
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+document
+.getElementById("loginBtn")
+.addEventListener("click",function(){
+
+    const email =
+        document.getElementById(
+            "loginEmail"
+        ).value.trim().toLowerCase();
+
+    const password =
+        document.getElementById(
+            "loginPassword"
+        ).value;
+
+    const msg =
+        document.getElementById(
+            "loginMsg"
+        );
+
+
+    msg.style.color =
+        "#e53935";
+
+
+if(
+        email === "" ||
+        password === ""
+    ){
+
+        msg.textContent =
+            "Enter email and password.";
+
+        return;
+    }
+
+
+    const found =
+        users.find(
+            u =>
+            u.email === email &&
+            u.password === password
+        );
+
+
+    if(!found){
+
+        msg.textContent =
+            "Wrong email or password.";
+
+        return;
+    }
+
+
+    if(found.blocked){
+
+        msg.textContent =
+            "Your account is blocked.";
+
+        return;
+    }
+
+
+    currentId = found.id;
+
+    localStorage.setItem(
+        CURRENT_KEY,
+        currentId
+    );
+
+
+    msg.style.color =
+        "#2e7d32";
+
+    msg.textContent =
+        "Login successful!";
+
+
+    setTimeout(function(){
+
+        openApp();
+
+    },300);
+
+});
+
+
+/* =========================================
+   OPEN APP
+========================================= */
+
+function openApp(){
+
+    const current =
+        me();
+
+
+    if(!current){
+
+        return;
+    }
+
+
+    auth.classList.add(
+        "hidden"
+    );
+
+    app.classList.remove(
+        "hidden"
+    );
+
+
+    document.getElementById(
+        "headerUser"
+    ).textContent =
+        "@" + current.username;
+
+
+    if(
+        current.email === ADMIN_EMAIL
+    ){
+
+        document
+        .getElementById("adminNav")
+        .classList.remove("hidden");
+
+    }
+
+
+    renderAll();
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+document
+.getElementById("logoutBtn")
+.addEventListener("click",function(){
+
+    currentId = null;
+
+    localStorage.removeItem(
+        CURRENT_KEY
+    );
+
+    app.classList.add(
+        "hidden"
+    );
+
+    auth.classList.remove(
+        "hidden"
+    );
+
+    document.getElementById(
+        "loginEmail"
+    ).value = "";
+
+    document.getElementById(
+        "loginPassword"
+    ).value = "";
+
+});
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+document
+.querySelectorAll(".nav button")
+.forEach(function(button){
+
+    button.addEventListener(
+        "click",
+        function(){
+
+            const page =
+                button.dataset.page;
+
+
+            document
+            .querySelectorAll(".page")
+            .forEach(function(p){
+
+                p.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+            document
+            .getElementById(page)
+            .classList.add(
+                "active"
+            );
+
+
+            document
+            .querySelectorAll(".nav button")
+            .forEach(function(b){
+
+                b.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+            button.classList.add(
+                "active"
+            );
+
+
+            renderAll();
+
+        }
+    );
+
+});
+
+
+/* =========================================
+   CREATE POST
+========================================= */
+
+document
+.getElementById("postBtn")
+.addEventListener("click",function(){
+
+    const text =
+        document.getElementById(
+            "postInput"
+        ).value.trim();
+
+    const msg =
+        document.getElementById(
+            "postMsg"
+        );
+
+
+    if(!text){
+
+        msg.style.color =
+            "#e53935";
+
+        msg.textContent =
+            "Write something first.";
+
+        return;
+    }
+
+
+    posts.unshift({
+
+        id:id(),
+
+        userId:currentId,
+
+        text:text,
+
+        time:Date.now(),
+
+        likes:[]
+
+    });
+
+
+    write(
+        POSTS_KEY,
+        posts
+    );
+
+
+    document.getElementById(
+        "postInput"
+    ).value = "";
+
+
+    msg.style.color =
+        "#2e7d32";
+
+    msg.textContent =
+        "Post published!";
+
+
+    renderAll();
+
+});
+
+
+/* =========================================
+   POST RENDER
+========================================= */
+
+function postHTML(post){
+
+    const u =
+        user(post.userId);
+
+
+    if(!u){
+
+        return "";
+    }
+
+
+    const liked =
+        post.likes.includes(
+            currentId
+        );
+
+
+    return `
+
+    <div class="post">
+
+        <div class="post-head">
+
+            <div class="avatar">
+                ${safe(initial(u.username))}
+            </div>
+
+            <div>
+
+                <div class="username">
+                    ${safe(u.username)}
+                </div>
+
+                <div class="time">
+                    ${new Date(post.time)
+                        .toLocaleString()}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="post-text">
+            ${safe(post.text)}
+        </div>
+
+        <div class="post-buttons">
+
+            <button
+                type="button"
+                class="small"
+                data-like="${post.id}"
+            >
+                ${liked ? "❤️" : "👍"}
+                ${post.likes.length}
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+function renderFeed(){
+
+    const box =
+        document.getElementById(
+            "feed"
+        );
+
+
+    if(posts.length === 0){
+
+        box.innerHTML =
+            '<div class="empty">No posts yet. Create the first post!</div>';
+
+        return;
+    }
+
+
+    box.innerHTML =
+        posts.map(postHTML).join("");
+
+}
+
+
+/* LIKE */
+
+document.addEventListener(
+"click",
+function(event){
+
+    const button =
+        event.target.closest(
+            "[data-like]"
+        );
+
+
+    if(!button){
+
+        return;
+    }
+
+
+    const post =
+        posts.find(
+            p =>
+            p.id === button.dataset.like
+        );
+
+
+    if(!post){
+
+        return;
+    }
+
+
+    const index =
+        post.likes.indexOf(
+            currentId
+        );
+
+
+    if(index === -1){
+
+        post.likes.push(
+            currentId
+        );
+
+    }else{
+
+        post.likes.splice(
+            index,
+            1
+        );
+
+    }
+
+
+    write(
+        POSTS_KEY,
+        posts
+    );
+
+
+    renderAll();
+
+});
+
+
+/* =========================================
+   REELS
+========================================= */
+
+document
+.getElementById("reelBtn")
+.addEventListener("click",function(){
+
+    const file =
+        document.getElementById(
+            "reelFile"
+        ).files[0];
+
+    const caption =
+        document.getElementById(
+            "reelCaption"
+        ).value.trim();
+
+    const msg =
+        document.getElementById(
+            "reelMsg"
+        );
+
+
+    if(!file){
+
+        msg.style.color =
+            "#e53935";
+
+        msg.textContent =
+            "Select a video first.";
+
+        return;
+    }
+
+
+    const url =
+        URL.createObjectURL(file);
+
+
+    reels.unshift({
+
+        id:id(),
+
+        userId:currentId,
+
+        caption:caption,
+
+        url:url,
+
+        time:Date.now()
+
+    });
+
+
+    msg.style.color =
+        "#2e7d32";
+
+    msg.textContent =
+        "Reel created for this session.";
+
+
+    document.getElementById(
+        "reelFile"
+    ).value = "";
+
+    document.getElementById(
+        "reelCaption"
+    ).value = "";
+
+
+    renderReels();
+
+});
+
+
+function renderReels(){
+
+    const box =
+        document.getElementById(
+            "reelsBox"
+        );
+
+
+    if(reels.length === 0){
+
+        box.innerHTML =
+            '<div class="empty">No reels yet.</div>';
+
+        return;
+    }
+
+
+    box.innerHTML =
+        reels.map(function(reel){
+
+            const u =
+                user(reel.userId);
+
+
+            return `
+
+            <div class="card">
+
+                <b>
+                    @${safe(
+                        u
+                        ? u.username
+                        : "Unknown"
+                    )}
+                </b>
+
+                <video
+                    controls
+                    playsinline
+                    style="width:100%;margin-top:10px;border-radius:10px;"
+                    src="${reel.url}"
+                ></video>
+
+                <p style="margin-top:8px;">
+                    ${safe(reel.caption || "")}
+                </p>
+
+            </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================
+   FRIEND SYSTEM
+========================================= */
+
+function sendRequest(targetId){
+
+    const target =
+        user(targetId);
+
+
+    const current =
+        me();
+
+
+    if(!target || !current){
+
+        return;
+    }
+
+
+    if(
+        current.friends.includes(
+            targetId
+        )
+    ){
+
+        return;
+    }
+
+
+    if(
+        target.requests.includes(
+            currentId
+        )
+    ){
+
+        return;
+    }
+
+
+    target.requests.push(
+        currentId
+    );
+
+
+    notifications.push({
+
+        id:id(),
+
+        userId:targetId,
+
+        text:
+            "@" + current.username +
+            " sent you a friend request.",
+
+        time:Date.now()
+
+    });
+
+
+    save();
+
+    renderAll();
+
+}
+
+
+function acceptRequest(requestId){
+
+    const current =
+        me();
+
+    const requester =
+        user(requestId);
+
+
+    if(!current || !requester){
+
+        return;
+    }
+
+
+    if(
+        !current.friends.includes(
+            requestId
+        )
+    ){
+
+        current.friends.push(
+            requestId
+        );
+
+    }
+
+
+    if(
+        !requester.friends.includes(
+            currentId
+        )
+    ){
+
+        requester.friends.push(
+            currentId
+        );
+
+    }
+
+
+    current.requests =
+        current.requests.filter(
+            x => x !== requestId
+        );
+
+
+    notifications.push({
+
+        id:id(),
+
+        userId:requestId,
+
+        text:
+            "@" + current.username +
+            " accepted your friend request.",
+
+        time:Date.now()
+
+    });
+
+
+    save();
+
+    renderAll();
+
+}
+
+
+function rejectRequest(requestId){
+
+    const current =
+        me();
+
+
+    current.requests =
+        current.requests.filter(
+            x => x !== requestId
+        );
+
+
+    save();
+
+    renderAll();
+
+}
+
+
+/* FRIEND BUTTONS */
+
+document.addEventListener(
+"click",
+function(event){
+
+    const add =
+        event.target.closest(
+            "[data-add]"
+        );
+
+
+    if(add){
+
+        sendRequest(
+            add.dataset.add
+        );
+
+        return;
+    }
+
+
+    const accept =
+        event.target.closest(
+            "[data-accept]"
+        );
+
+
+    if(accept){
+
+        acceptRequest(
+            accept.dataset.accept
+        );
+
+        return;
+    }
+
+
+    const reject =
+        event.target.closest(
+            "[data-reject]"
+        );
+
+
+    if(reject){
+
+        rejectRequest(
+            reject.dataset.reject
+        );
+
+        return;
+    }
+
+
+    const follow =
+        event.target.closest(
+            "[data-follow]"
+        );
+
+
+    if(follow){
+
+        toggleFollow(
+            follow.dataset.follow
+        );
+
+        return;
+    }
+
+
+    const chat =
+        event.target.closest(
+            "[data-chat]"
+        );
+
+
+    if(chat){
+
+        selectedChat =
+            chat.dataset.chat;
+
+        openChat();
+
+    }
+
+});
+
+
+/* FOLLOW */
+
+function toggleFollow(targetId){
+
+    const current =
+        me();
+
+    const target =
+        user(targetId);
+
+
+    if(!current || !target){
+
+        return;
+    }
+
+
+    const index =
+        current.following.indexOf(
+            targetId
+        );
+
+
+    if(index === -1){
+
+        current.following.push(
+            targetId
+        );
+
+
+        if(
+            !target.followers.includes(
+                currentId
+            )
+        ){
+
+            target.followers.push(
+                currentId
+            );
+
+        }
+
+    }else{
+
+        current.following.splice(
+            index,
+            1
+        );
+
+
+        target.followers =
+            target.followers.filter(
+                x =>
+                x !== currentId
+            );
+
+    }
+
+
+    save();
+
+    renderAll();
+
+}
+
+
+/* RENDER FRIENDS */
+
+function renderFriends(){
+
+    const current =
+        me();
+
+
+    if(!current){
+
+        return;
+    }
+
+
+    /* REQUESTS */
+
+    const requestsBox =
+        document.getElementById(
+            "requests"
+        );
+
+
+    if(current.requests.length === 0){
+
+        requestsBox.innerHTML =
+            '<div class="empty">No friend requests.</div>';
+
+    }else{
+
+        requestsBox.innerHTML =
+            current.requests.map(function(id){
+
+                const u =
+                    user(id);
+
+
+                if(!u){
+
+                    return "";
+                }
+
+
+                return `
+
+                <div class="person">
+
+                    <div class="person-left">
+
+                        <div class="avatar">
+                            ${safe(initial(u.username))}
+                        </div>
+
+                        <div>
+                            <b>${safe(u.username)}</b>
+                        </div>
+
+                    </div>
+
+                    <div class="person-buttons">
+
+                        <button
+                            type="button"
+                            class="small green"
+                            data-accept="${u.id}"
+                        >
+                            Accept
+                        </button>
+
+                        <button
+                            type="button"
+                            class="small"
+                            data-reject="${u.id}"
+                        >
+                            Reject
+                        </button>
+
+                    </div>
+
+                </div>
+
+                `;
+
+            }).join("");
+
+    }
+
+
+    /* PEOPLE */
+
+    const peopleBox =
+        document.getElementById(
+            "people"
+        );
+
+
+    const others =
+        users.filter(
+            u =>
+            u.id !== currentId &&
+            !u.blocked
+        );
+
+
+    if(others.length === 0){
+
+        peopleBox.innerHTML =
+            '<div class="empty">No other users yet.</div>';
+
+    }else{
+
+        peopleBox.innerHTML =
+            others.map(function(u){
+
+                const following =
+                    current.following.includes(
+                        u.id
+                    );
+
+                const friend =
+                    current.friends.includes(
+                        u.id
+                    );
+
+                const pending =
+                    u.requests.includes(
+                        currentId
+                    );
+
+
+                return `
+
+                <div class="person">
+
+                    <div class="person-left">
+
+                        <div class="avatar">
+                            ${safe(initial(u.username))}
+                        </div>
+
+                        <div>
+
+                            <b>
+                                ${safe(u.username)}
+                            </b>
+
+                            <small style="display:block;color:#777;">
+                                ${safe(u.email)}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="person-buttons">
+
+                        <button
+                            type="button"
+                            class="small"
+                            data-follow="${u.id}"
+                        >
+                            ${
+                                following
+                                ? "Unfollow"
+                                : "Follow"
+                            }
+                        </button>
+
+                        ${
+                            friend
+                            ?
+                            `<button
+                                type="button"
+                                class="small green"
+                                data-chat="${u.id}"
+                            >
+                                Chat
+                            </button>`
+                            :
+                            pending
+                            ?
+                            `<button
+                                type="button"
+                                class="small"
+                                disabled
+                            >
+                                Requested
+                            </button>`
+                            :
+                            `<button
+                                type="button"
+                                class="small"
+                                data-add="${u.id}"
+                            >
+                                Add Friend
+                            </button>`
+                        }
+
+                    </div>
+
+                </div>
+
+                `;
+
+            }).join("");
+
+    }
+
+
+    /* MY FRIENDS */
+
+    const friendsBox =
+        document.getElementById(
+            "myFriends"
+        );
+
+
+    const friends =
+        current.friends
+        .map(user)
+        .filter(Boolean);
+
+
+    if(friends.length === 0){
+
+        friendsBox.innerHTML =
+            '<div class="empty">No friends yet.</div>';
+
+    }else{
+
+        friendsBox.innerHTML =
+            friends.map(function(u){
+
+                return `
+
+                <div class="person">
+
+                    <div class="person-left">
+
+                        <div class="avatar">
+                            ${safe(initial(u.username))}
+                        </div>
+
+                        <b>
+                            ${safe(u.username)}
+                        </b>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="small green"
+                        data-chat="${u.id}"
+                    >
+                        Chat
+                    </button>
+
+                </div>
+
+                `;
+
+            }).join("");
+
+    }
+
+}
+
+
+/* =========================================
+   CHAT
+========================================= */
+
+function openChat(){
+
+    document
+    .querySelectorAll(".page")
+    .forEach(function(p){
+
+        p.classList.remove(
+            "active"
+        );
+
+    });
+
+
+    document
+    .getElementById("chat")
+    .classList.add(
+        "active"
+    );
+
+
+    document
+    .querySelectorAll(".nav button")
+    .forEach(function(b){
+
+        b.classList.remove(
+            "active"
+        );
+
+    });
+
+
+    document
+    .querySelector(
+        '[data-page="chat"]'
+    )
+    .classList.add(
+        "active"
+    );
+
+
+    renderChat();
+
+}
+
+
+function chatId(a,b){
+
+    return [a,b]
+        .sort()
+        .join("-");
+}
+
+
+function renderChat(){
+
+    const current =
+        me();
+
+
+    const usersBox =
+        document.getElementById(
+            "chatUsers"
+        );
+
+
+    if(!current){
+
+        return;
+    }
+
+
+    const friends =
+        current.friends
+        .map(user)
+        .filter(Boolean);
+
+
+    if(friends.length === 0){
+
+        usersBox.innerHTML =
+            '<div class="empty">Add friends to chat.</div>';
+
+        document.getElementById(
+            "messages"
+        ).innerHTML =
+            '<div class="empty">No friends.</div>';
+
+        return;
+    }
+
+
+    if(
+        !selectedChat ||
+        !current.friends.includes(
+            selectedChat
+        )
+    ){
+
+        selectedChat =
+            friends[0].id;
+
+    }
+
+
+    usersBox.innerHTML =
+        friends.map(function(u){
+
+            return `
+
+            <button
+                type="button"
+                class="chat-user ${
+                    selectedChat === u.id
+                    ? "active"
+                    : ""
+                }"
+                data-select-chat="${u.id}"
+            >
+                ${safe(u.username)}
+            </button>
+
+            `;
+
+        }).join("");
+
+
+    const list =
+        messages.filter(
+            m =>
+            m.chat ===
+            chatId(
+                currentId,
+                selectedChat
+            )
+        );
+
+
+    const messageBox =
+        document.getElementById(
+            "messages"
+        );
+
+
+    if(list.length === 0){
+
+        messageBox.innerHTML =
+            '<div class="empty">No messages yet.</div>';
+
+    }else{
+
+        messageBox.innerHTML =
+            list.map(function(m){
+
+                return `
+
+                <div class="message ${
+                    m.sender ===      currentId
+                    ? "me"
+                    : "other"
+                }">
+
+                    ${safe(m.text)}
+
+                </div>
+
+                `;
+
+            }).join("");
+
+    }
+
+}
+
+
+/* SELECT CHAT */
+
+document.addEventListener(
+"click",
+function(event){
+
+    const button =
+        event.target.closest(
+            "[data-select-chat]"
+        );
+
+
+    if(button){
+
+        selectedChat =
+            button.dataset.selectChat;
+
+        renderChat();
+
+    }
+
+});
+
+
+/* SEND */
+
+function sendMessage(){
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    const text =
+        input.value.trim();
+
+
+    const current =
+        me();
+
+
+    if(
+        !text ||
+        !selectedChat ||
+        !current.friends.includes(
+            selectedChat
+        )
+    ){
+
+        return;
+    }
+
+
+    messages.push({
+
+        id:id(),
+
+        chat:
+            chatId(
+                currentId,
+                selectedChat
+            ),
+
+        sender:currentId,
+
+        receiver:selectedChat,
+
+        text:text,
+
+        time:Date.now()
+
+    });
+
+
+    write(
+        MSG_KEY,
+        messages
+    );
+
+
+    input.value = "";
+
+    renderChat();
+
+}
+
+
+document
+.getElementById("sendBtn")
+.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+document
+.getElementById("messageInput")
+.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key === "Enter"){
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   PROFILE
+========================================= */
+
+function renderProfile(){
+
+    const current =
+        me();
+
+
+    if(!current){
+
+        return;
+    }
+
+
+    document.getElementById(
+        "profileAvatar"
+    ).textContent =
+        initial(current.username);
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        current.username;
+
+
+    document.getElementById(
+        "profileEmail"
+    ).textContent =
+        current.email;
+
+
+    document.getElementById(
+        "profilePosts"
+    ).textContent =
+        posts.filter(
+            p =>
+            p.userId === currentId
+        ).length;
+
+
+    document.getElementById(
+        "profileFriends"
+    ).textContent =
+        current.friends.length;
+
+
+    document.getElementById(
+        "profileFollowers"
+    ).textContent =
+        current.followers.length;
+
+
+    document.getElementById(
+        "profileFollowing"
+    ).textContent =
+        current.following.length;
+
+
+    const mine =
+        posts.filter(
+            p =>
+            p.userId === currentId
+        );
+
+
+    const box =
+        document.getElementById(
+            "myPosts"
+        );
+
+
+    if(mine.length === 0){
+
+        box.innerHTML =
+            '<div class="empty">No posts yet.</div>';
+
+    }else{
+
+        box.innerHTML =
+            mine.map(postHTML).join("");
+
+    }
+
+}
+
+
+/* =========================================
+   NOTIFICATIONS
+========================================= */
+
+function renderNotifications(){
+
+    const box =
+        document.getElementById(
+            "notificationBox"
+        );
+
+
+    const list =
+        notifications.filter(
+            n =>
+            n.userId === currentId
+        );
+
+
+    if(list.length === 0){
+
+        box.innerHTML =
+            '<div class="empty">No notifications.</div>';
+
+        return;
+    }
+
+
+    box.innerHTML =
+        list.map(function(n){
+
+            return `
+
+            <div class="admin-item">
+
+                <div>
+                    🔔 ${safe(n.text)}
+                </div>
+
+                <small>
+                    ${new Date(n.time)
+                        .toLocaleString()}
+                </small>
+
+            </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================
+   ADMIN
+========================================= */
+
+function renderAdmin(){
+
+    const current =
+        me();
+
+
+    if(
+        !current ||
+        current.email !== ADMIN_EMAIL
+    ){
+
+        return;
+    }
+
+
+    const usersBox =
+        document.getElementById(
+            "adminUsers"
+        );
+
+
+    usersBox.innerHTML =
+        users
+        .filter(
+            u =>
+            u.id !== currentId
+        )
+        .map(function(u){
+
+            return `
+
+            <div class="admin-item">
+
+                <div>
+
+                    <b>
+                        ${safe(u.username)}
+                    </b>
+
+                    <small style="display:block;">
+                        ${safe(u.email)}
+                    </small>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="small ${
+                        u.blocked
+                        ? "green"
+                        : "red"
+                    }"
+                    data-block="${u.id}"
+                >
+                    ${
+                        u.blocked
+                        ? "Unblock"
+                        : "Block"
+                    }
+                </button>
+
+            </div>
+
+            `;
+
+        }).join("");
+
+
+    const postsBox =
+        document.getElementById(
+            "adminPosts"
+        );
+
+
+    if(posts.length === 0){
+
+        postsBox.innerHTML =
+            '<div class="empty">No posts.</div>';
+
+    }else{
+
+        postsBox.innerHTML =
+            posts.map(function(p){
+
+                const u =
+                    user(p.userId);
+
+
+                return `
+
+                <div class="admin-item">
+
+                    <div>
+
+                        <b>
+                            ${safe(
+                                u
+                                ? u.username
+                                : "Unknown"
+                            )}
+                        </b>
+
+                        <div>
+                            ${safe(
+                                p.text.substring(
+                                    0,
+                                    80
+                                )
+                            )}
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="small red"
+                        data-delete="${p.id}"
+                    >
+                        Delete
+                    </button>
+
+                </div>
+
+                `;
+
+            }).join("");
+
+    }
+
+}
+
+
+/* ADMIN EVENTS */
+
+document.addEventListener(
+"click",
+function(event){
+
+    const block =
+        event.target.closest(
+            "[data-block]"
+        );
+
+
+    if(block){
+
+        const current =
+            me();
+
+
+        if(
+            !current ||
+            current.email !== ADMIN_EMAIL
+        ){
+
+            return;
+        }
+
+
+        const u =
+            user(
+                block.dataset.block
+            );
+
+
+        if(u){
+
+            u.blocked =
+                !u.blocked;
+
+            save();
+
+            renderAll();
+
+        }
+
+        return;
+    }
+
+
+    const del =
+        event.target.closest(
+            "[data-delete]"
+        );
+
+
+    if(del){
+
+        const current =
+            me();
+
+
+        if(
+            !current ||
+            current.email !== ADMIN_EMAIL
+        ){
+
+            return;
+        }
+
+
+        posts =
+            posts.filter(
+                p =>
+                p.id !== del.dataset.delete
+            );
+
+
+        write(
+            POSTS_KEY,
+            posts
+        );
+
+
+        renderAll();
+
+    }
+
+});
+
+
+/* =========================================
+   RENDER ALL
+========================================= */
+
+function renderAll(){
+
+    if(!me()){
+
+        return;
+    }
+
+
+    renderFeed();
+
+    renderReels();
+
+    renderFriends();
+
+    renderChat();
+
+    renderProfile();
+
+    renderNotifications();
+
+    renderAdmin();
+
+
+    document.getElementById(
+        "headerUser"
+    ).textContent =
+        "@" + me().username;
+
+}
+
+
+/* =========================================
+   AUTO LOGIN
+========================================= */
+
+if(currentId){
+
+    const current =
+        me();
+
+
+    if(
+        current &&
+        !current.blocked
+    ){
+
+        openApp();
+
+    }else{
+
+        currentId = null;
+
+        localStorage.removeItem(
+            CURRENT_KEY
+        );
+
+    }
+
+}
+
+})();
+
+</script>
+
+</body>
+</html>
